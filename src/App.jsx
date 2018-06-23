@@ -14,6 +14,8 @@ class App extends Component {
     this.state = { 
       code: '',
       errors:'',
+      output:'',
+      consoleText:'',
       passedTestCount:'',
       totalTestCount:'' 
     };
@@ -38,7 +40,27 @@ class App extends Component {
   }
 
   runCode = () => {
-    //one solution is to create it as a temp file and run
+    
+    let consoleLog = (msg) => {
+      this.setState({consoleText: msg})
+    }
+
+    window.console.log = consoleLog;
+
+    try{
+      const output = eval(this.state.code);
+      if(output !== undefined){
+        const temp = eval(this.state.code).toString();
+        this.setState({output:temp, consoleText:''});
+      }
+
+      
+    }
+    catch(err){
+      //take previous output and append to it
+      this.setState({consoleText:err.toString(), output:''});
+    }
+
   }
 
   render() {
@@ -84,24 +106,48 @@ class App extends Component {
               showPrintMargin={true}
               showGutter={true}
               highlightActiveLine={true}
-              value={this.state.code}
+              value={this.state.output}
               setOptions={{
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true,
+                    enableBasicAutocompletion: false,
+                    enableLiveAutocompletion: false,
                     enableSnippets: true,
-                    showLineNumbers: true,
+                    showLineNumbers: false,
                     tabSize: 2,
                   }}
             />      
+
           </div>    
 
           <div className="margin-left-10 margin-top-30 btn-group">
-            <button className="btn btn-primary" onClick={this.onTest}>
+            <button className="btn btn-primary" onClick={this.runCode}>
               Run Code
             </button>
             <button className="btn btn-success" onClick={this.onSubmit}>Submit</button>
           </div>
-          
+  
+          <h5>Console</h5>
+          <AceEditor
+              mode="javascript"
+              theme="monokai"
+              className="codeResult"
+              readOnly={true}
+              name="code"
+              onLoad={this.onLoad}
+              onChange={this.onChange}
+              fontSize={14}
+              showPrintMargin={true}
+              showGutter={true}
+              highlightActiveLine={true}
+              value={this.state.consoleText}
+              setOptions={{
+                    enableBasicAutocompletion: false,
+                    enableLiveAutocompletion: false,
+                    enableSnippets: true,
+                    showLineNumbers: false,
+                    tabSize: 2,
+                  }}
+            />      
+
       </div>
     );
   }
