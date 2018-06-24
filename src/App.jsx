@@ -69,9 +69,13 @@ class App extends Component {
       <div className="App">
         <h1 className="pull-left"> Write Your code here : </h1>
         
+
         <div className="codeSpace">
             
+        
             {/* for writing code */}
+          <div>  
+            <div>Code</div>  
             <AceEditor
               mode="javascript"
               theme="monokai"
@@ -92,7 +96,10 @@ class App extends Component {
                     tabSize: 2,
                   }}
             />
+          </div>
               
+          <div>
+            <div>Output</div>
             {/* for code results */}
             <AceEditor
               mode="javascript"
@@ -115,6 +122,33 @@ class App extends Component {
                     tabSize: 2,
                   }}
             />      
+          </div>
+
+
+          <div>
+            <div>Console</div>
+            <AceEditor
+                mode="javascript"
+                theme="monokai"
+                className="codeResult"
+                readOnly={true}
+                name="code"
+                onLoad={this.onLoad}
+                onChange={this.onChange}
+                fontSize={14}
+                showPrintMargin={true}
+                showGutter={true}
+                highlightActiveLine={true}
+                value={this.state.consoleText}
+                setOptions={{
+                      enableBasicAutocompletion: false,
+                      enableLiveAutocompletion: false,
+                      enableSnippets: true,
+                      showLineNumbers: false,
+                      tabSize: 2,
+                    }}
+              />      
+            </div>
 
           </div>    
 
@@ -124,29 +158,6 @@ class App extends Component {
             </button>
             <button className="btn btn-success" onClick={this.onSubmit}>Submit</button>
           </div>
-  
-          <h5>Console</h5>
-          <AceEditor
-              mode="javascript"
-              theme="monokai"
-              className="codeResult"
-              readOnly={true}
-              name="code"
-              onLoad={this.onLoad}
-              onChange={this.onChange}
-              fontSize={14}
-              showPrintMargin={true}
-              showGutter={true}
-              highlightActiveLine={true}
-              value={this.state.consoleText}
-              setOptions={{
-                    enableBasicAutocompletion: false,
-                    enableLiveAutocompletion: false,
-                    enableSnippets: true,
-                    showLineNumbers: false,
-                    tabSize: 2,
-                  }}
-            />      
 
       </div>
     );
