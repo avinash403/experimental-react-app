@@ -1,6 +1,4 @@
-
 ## Table of Contents
-
 [Sending Feedback](#sending-feedback)
 - [Folder Structure](#folder-structure)
 - [Available Scripts](#available-scripts)
